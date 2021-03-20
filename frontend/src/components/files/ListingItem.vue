@@ -1,3 +1,4 @@
+
 <template>
   <div class="item"
   role="button"
@@ -12,11 +13,27 @@
   :data-dir="isDir"
   :aria-label="name"
   :aria-selected="isSelected">
+    <div @contextmenu.prevent="$refs.menu.open($event, getPath(name))">
+      <ContextMenu ref="menu">
+        <template slot-scope="{ contextData }">
+          <ContextMenuItem @click.native="sendToCont('O', contextData)">
+            Open Squid Project {{ contextData }}
+          </ContextMenuItem>
+          <ContextMenuItem @click.native="sendToCont('G', contextData)">
+            New Squid GEOCHRON Project {{ contextData }}
+          </ContextMenuItem>
+          <ContextMenuItem @click.native="$refs.menu.close">
+            Action 3 {{ contextData }}
+          </ContextMenuItem>
+          <ContextMenuItem @click.native="$refs.menu.close">
+            Action 4 {{ contextData }}
+          </ContextMenuItem>
+        </template>
+      </ContextMenu>
     <div>
       <img v-if="type==='image' && isThumbsEnabled && !isSharing" v-lazy="thumbnailUrl">
       <i v-else class="material-icons">{{ icon }}</i>
     </div>
-
     <div>
       <p class="name">{{ name }}</p>
 
@@ -27,19 +44,28 @@
         <time :datetime="modified">{{ humanTime() }}</time>
       </p>
     </div>
+    </div>
   </div>
 </template>
 
 <script>
 import { baseURL, enableThumbs } from '@/utils/constants'
+import store from '@/store'
 import { mapMutations, mapGetters, mapState } from 'vuex'
 import filesize from 'filesize'
 import moment from 'moment'
 import { files as api } from '@/api'
 import * as upload  from '@/utils/upload'
+import ContextMenu from './ContextMenu';
+import ContextMenuItem from './ContextMenuItem';
+const axios = require('axios');
 
 export default {
   name: 'item',
+  components: {
+      ContextMenu,
+      ContextMenuItem,
+    },
   data: function () {
     return {
       touches: 0
@@ -104,6 +130,13 @@ export default {
         this.addSelected(this.index)
       }
     },
+    sendToCont: function(type, path) {
+      //THIS IS HARDCODED CURRENTLY
+      //'http://192.168.99.100:' + store.state.userPort.toString() + '/squid_servlet/OpenServlet/' + type,
+      let postUrl = ('http://192.168.99.100:' + store.state.userPort.toString() + '/squid_servlet/OpenServlet/' + type).toString()
+      axios.post( postUrl, path)
+      this.$refs.menu.close()
+    },
     dragOver: function (event) {
       if (!this.canDrop) return
 
@@ -117,6 +150,17 @@ export default {
       }
 
       el.style.opacity = 1
+    },
+    remFirstOcc: function(str, searchstr)       {
+      var index = str.indexOf(searchstr);
+      if (index === -1) {
+        return str;
+      }
+      return str.slice(0, index) + str.slice(index + searchstr.length);
+    },
+    getPath: function(namer) {
+      let path = window.location.pathname.toString()
+      return (this.remFirstOcc(path, "/files") + namer);
     },
     drop: async function (event) {
       if (!this.canDrop) return

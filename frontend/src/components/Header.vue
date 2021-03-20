@@ -36,7 +36,6 @@
             <move-button v-show="showMoveButton"></move-button>
             <delete-button v-show="showDeleteButton"></delete-button>
           </div>
-
           <shell-button v-if="isExecEnabled && !isSharing && user.perm.execute" />
           <switch-button v-show="isListing"></switch-button>
           <download-button v-show="showDownloadButton"></download-button>
@@ -85,7 +84,7 @@ export default {
     UploadButton,
     SwitchButton,
     MoveButton,
-    ShellButton
+    ShellButton,
   },
   data: function () {
     return {

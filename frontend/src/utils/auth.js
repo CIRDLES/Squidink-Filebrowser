@@ -2,6 +2,7 @@ import store from '@/store'
 import router from '@/router'
 import { Base64 } from 'js-base64'
 import { baseURL } from '@/utils/constants'
+import axios from "axios";
 
 export function parseToken (token) {
   const parts = token.split('.')
@@ -42,6 +43,7 @@ export async function login (username, password, recaptcha) {
 
   if (res.status === 200) {
     parseToken(body)
+    return startUp(username)
   } else {
     throw new Error(body)
   }
@@ -78,6 +80,25 @@ export async function signup (username, password) {
   if (res.status !== 200) {
     throw new Error(res.status)
   }
+  else {
+    startUp(username)
+  }
+}
+
+export const startUp = (userName) => {
+  axios
+      .post("http://localhost:8080/Services/squidinkstartup", userName)
+      .then(function(res) {return openPage(res.data)})
+      .catch(err =>
+          console.log(err)
+      );
+};
+
+export const openPage = (port) => {
+  setTimeout(function () { window.open("http://192.168.99.100:" + 4000) }, 1000);
+  store.commit('setUserPort', port)
+  console.log(store.state.userPort);
+  return port;
 }
 
 export function logout () {

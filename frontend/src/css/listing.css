@@ -26,6 +26,12 @@
   align-items: center;
   cursor: pointer;
 }
+#listing .customcontext div{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  width: 2em;
+}
 
 #listing .item div:last-of-type {
   text-overflow: ellipsis;
@@ -81,7 +87,7 @@
 }
 
 #listing.mosaic .item {
-  width: calc(33% - 1em);
+  width: 33%;
   margin: .5em;
   padding: 0.5em;
   border-radius: 0.2em;

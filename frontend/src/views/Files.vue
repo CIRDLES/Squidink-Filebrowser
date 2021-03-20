@@ -1,3 +1,4 @@
+
 <template>
   <div>
     <div id="breadcrumbs" v-if="isListing || error">

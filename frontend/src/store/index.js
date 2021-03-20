@@ -25,6 +25,7 @@ const state = {
   showMessage: null,
   showConfirm: null,
   previewMode: false,
+  userPort: 0,
   hash: ''
 }
 

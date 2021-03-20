@@ -83,7 +83,7 @@ export default {
         }
 
         await auth.login(this.username, this.password, captcha)
-        this.$router.push({ path: redirect })
+        this.$router.push({ path: redirect})
       } catch (e) {
         if (e.message == 409) {
           this.error = this.$t('login.usernameTaken')
