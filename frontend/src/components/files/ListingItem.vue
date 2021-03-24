@@ -134,7 +134,9 @@ export default {
       //THIS IS HARDCODED CURRENTLY
       //'http://192.168.99.100:' + store.state.userPort.toString() + '/squid_servlet/OpenServlet/' + type,
       let postUrl = ('http://192.168.99.100:' + store.state.userPort.toString() + '/squid_servlet/OpenServlet/' + type).toString()
-      axios.post( postUrl, path)
+      axios.post( postUrl, path, {headers:{
+        'Content-Type' : 'text/plain'
+        }})
       this.$refs.menu.close()
     },
     dragOver: function (event) {
@@ -254,7 +256,13 @@ export default {
       this.addSelected(this.index)
     },
     dblclick: function () {
-      if (!this.singleClick) this.open()
+      if (!this.singleClick) {
+        this.open()
+        if(!this.isDir) {
+          const push = this.url.replace('/files', "")
+          this.sendToCont('O', push.replace(':', ""))
+        }
+      }
     },
     touchstart () {
       setTimeout(() => {
