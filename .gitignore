@@ -28,3 +28,5 @@ yarn-error.log*
 *.njsproj
 *.sln
 *.sw*
+./filebrowser.exe
+./users/bob22@gmail.com
