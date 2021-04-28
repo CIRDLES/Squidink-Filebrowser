@@ -25,7 +25,8 @@ const state = {
   showMessage: null,
   showConfirm: null,
   previewMode: false,
-  userPort: 0,
+  setUserPort: 8080,
+  windowPort: 3000,
   hash: ''
 }
 

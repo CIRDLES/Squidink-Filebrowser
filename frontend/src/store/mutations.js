@@ -47,6 +47,7 @@ const mutations = {
   },
   setJWT: (state, value) => (state.jwt = value),
   setUserPort: (state, value) => (state.userPort = value),
+  windowPort: (state, value) => (state.windowPort = value),
   multiple: (state, value) => (state.multiple = value),
   addSelected: (state, value) => (state.selected.push(value)),
   addPlugin: (state, value) => {

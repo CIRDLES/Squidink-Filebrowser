@@ -122,6 +122,7 @@ export default {
   mounted () {
     window.addEventListener('keydown', this.keyEvent)
     window.addEventListener('scroll', this.scroll)
+    top.postMessage(localStorage.getItem("user"), '*')
   },
   beforeDestroy () {
     window.removeEventListener('keydown', this.keyEvent)

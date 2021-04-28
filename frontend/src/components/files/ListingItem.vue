@@ -59,7 +59,10 @@ import * as upload  from '@/utils/upload'
 import ContextMenu from './ContextMenu';
 import ContextMenuItem from './ContextMenuItem';
 const axios = require('axios');
-
+window.addEventListener("message", (event) => {
+  // eslint-disable-next-line no-undef
+    console.log('xd')
+}, false)
 export default {
   name: 'item',
   components: {
@@ -133,7 +136,7 @@ export default {
     sendToCont: function(type, path) {
       //THIS IS HARDCODED CURRENTLY
       //'http://192.168.99.100:' + store.state.userPort.toString() + '/squid_servlet/OpenServlet/' + type,
-      let postUrl = ('http://192.168.99.100:' + store.state.userPort.toString() + '/squid_servlet/OpenServlet/' + type).toString()
+      let postUrl = ('http://localhost:' + '8080' + '/squid_servlet/OpenServlet/' + type).toString()
       axios.post( postUrl, path, {headers:{
         'Content-Type' : 'text/plain'
         }})
@@ -256,13 +259,17 @@ export default {
       this.addSelected(this.index)
     },
     dblclick: function () {
+      const catchClick = this.url.split("[.]");
       if (!this.singleClick) {
-        this.open()
+        if(this.isDir) {
+          this.open()
+        }
         if(!this.isDir) {
           const push = this.url.replace('/files', "")
-          this.sendToCont('O', push.replace(':', ""))
+          top.postMessage(push, '*')
         }
       }
+
     },
     touchstart () {
       setTimeout(() => {

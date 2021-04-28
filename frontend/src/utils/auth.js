@@ -43,7 +43,10 @@ export async function login (username, password, recaptcha) {
 
   if (res.status === 200) {
     parseToken(body)
-    return startUp(username)
+    return setTimeout(function () {
+      localStorage.setItem('user', username);
+      window.open("http://localhost:" + "3000", "_self");
+    }, 1000);
   } else {
     throw new Error(body)
   }
@@ -81,22 +84,37 @@ export async function signup (username, password) {
     throw new Error(res.status)
   }
   else {
-    startUp(username)
+    setTimeout(function () {
+      localStorage.setItem('user', username);
+      window.open("http://localhost:" + "3000", "_self");
+    }, 1000);
   }
 }
 
 export const startUp = (userName) => {
   axios
       .post("http://localhost:8080/Services/squidinkstartup", userName)
-      .then(function(res) {return openPage(res.data)})
+      .then(function(res) {
+        console.log(res.data)
+        const respon = res.data.split("-")
+        return openPage(respon)
+      })
       .catch(err =>
           console.log(err)
       );
 };
 
 export const openPage = (port) => {
-  setTimeout(function () { window.open("http://192.168.99.100:" + 4000) }, 1000);
-  store.commit('setUserPort', port)
+  console.log(port[0] + "-" + port[1])
+  localStorage.setItem('windowPort', port[1]);
+  localStorage.setItem('setUserPort', port[0])
+  console.log(localStorage.getItem('setUserPort').toString())
+  console.log(localStorage.getItem('windowPort').toString())
+  store.commit('setUserPort', localStorage.getItem('setUserPort').toString());
+  store.commit('windowPort', localStorage.getItem('windowPort').toString())
+  setTimeout(function () {
+    window.open("http://localhost:" + store.state.windowPort, "_self");
+  }, 1000);
   console.log(store.state.userPort);
   return port;
 }

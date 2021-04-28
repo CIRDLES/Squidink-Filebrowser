@@ -67,7 +67,6 @@ export default {
     },
     submit: function (event) {
       const cmd = event.target.innerText.trim()
-
       if (cmd === '') {
         return
       }

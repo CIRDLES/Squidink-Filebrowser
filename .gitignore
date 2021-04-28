@@ -1,4 +1,5 @@
 *.db
+*.exe
 *.lock
 *.bak
 _old
@@ -28,5 +29,5 @@ yarn-error.log*
 *.njsproj
 *.sln
 *.sw*
-./filebrowser.exe
-./users/bob22@gmail.com
+filebrowser.exe
+/users/bob22@gmail.com/
