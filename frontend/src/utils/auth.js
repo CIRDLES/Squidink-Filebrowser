@@ -45,7 +45,7 @@ export async function login (username, password, recaptcha) {
     parseToken(body)
     return setTimeout(function () {
       localStorage.setItem('user', username);
-      window.open("http://localhost:" + "3000", "_self");
+      window.open("https://cirdles.cs.cofc.edu/Squidink", "_self");
     }, 1000);
   } else {
     throw new Error(body)

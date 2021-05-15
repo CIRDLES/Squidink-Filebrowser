@@ -16,17 +16,12 @@
     <div @contextmenu.prevent="$refs.menu.open($event, getPath(name))">
       <ContextMenu ref="menu">
         <template slot-scope="{ contextData }">
-          <ContextMenuItem @click.native="sendToCont('O', contextData)">
-            Open Squid Project {{ contextData }}
+          <ContextMenuItem @click.native="sendToCont(contextData)"
+                           >
+            Open Squid Project
           </ContextMenuItem>
-          <ContextMenuItem @click.native="sendToCont('G', contextData)">
-            New Squid GEOCHRON Project {{ contextData }}
-          </ContextMenuItem>
-          <ContextMenuItem @click.native="$refs.menu.close">
-            Action 3 {{ contextData }}
-          </ContextMenuItem>
-          <ContextMenuItem @click.native="$refs.menu.close">
-            Action 4 {{ contextData }}
+          <ContextMenuItem @click.native="sendToCont(contextData)">
+            New Squid GEOCHRON Project
           </ContextMenuItem>
         </template>
       </ContextMenu>
@@ -59,10 +54,6 @@ import * as upload  from '@/utils/upload'
 import ContextMenu from './ContextMenu';
 import ContextMenuItem from './ContextMenuItem';
 const axios = require('axios');
-window.addEventListener("message", (event) => {
-  // eslint-disable-next-line no-undef
-    console.log('xd')
-}, false)
 export default {
   name: 'item',
   components: {
@@ -133,13 +124,8 @@ export default {
         this.addSelected(this.index)
       }
     },
-    sendToCont: function(type, path) {
-      //THIS IS HARDCODED CURRENTLY
-      //'http://192.168.99.100:' + store.state.userPort.toString() + '/squid_servlet/OpenServlet/' + type,
-      let postUrl = ('http://localhost:' + '8080' + '/squid_servlet/OpenServlet/' + type).toString()
-      axios.post( postUrl, path, {headers:{
-        'Content-Type' : 'text/plain'
-        }})
+    sendToCont: function(path) {
+      top.postMessage(path, '*')
       this.$refs.menu.close()
     },
     dragOver: function (event) {
