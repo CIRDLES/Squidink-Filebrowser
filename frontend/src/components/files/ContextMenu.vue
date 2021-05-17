@@ -125,6 +125,7 @@
         z-index: 999;
         width: auto;
         overflow: visible;
+        width: auto !important;
         background: #FFF;
         border-radius: 4px;
         box-shadow: 0 1px 4px 0 #eee;
