@@ -20,6 +20,52 @@ Please refer to our docs at [https://filebrowser.org/features](https://filebrows
 
 For installation instructions please refer to our docs at [https://filebrowser.org/installation](https://filebrowser.org/installation).
 
+#### Build Frontend
+````
+//Navigate to frontend from root
+
+cd frontend
+
+//Install dependencies
+
+npm install
+
+//Build frontend
+
+npm run build
+````
+#### Build backend
+Requires the installation of [go](https://golang.org/doc/install) and [rice](https://github.com/GeertJohan/go.rice/)
+````
+//From root, installs go dependencies
+
+go mod download
+
+//Utilize rice to bundle static assets
+
+cd http
+rice embed-go
+````
+
+#### Build Executable
+````
+//From root
+go build
+````
+#### Running Filebrowser
+````
+//From root
+
+//For Windows
+
+filebrowser.exe
+
+//For Mac
+
+open filebrowser
+````
+
+
 ## Configuration
 
 [Authentication Method](https://filebrowser.org/configuration/authentication-method) - You can change the way the user authenticates with the filebrowser server
