@@ -16,12 +16,8 @@
     <div @contextmenu.prevent="$refs.menu.open($event, getPath(name))">
       <ContextMenu ref="menu">
         <template slot-scope="{ contextData }">
-          <ContextMenuItem @click.native="sendToCont(contextData)"
-                           >
-            Open Squid Project
-          </ContextMenuItem>
-          <ContextMenuItem @click.native="sendToCont(contextData)">
-            New Squid GEOCHRON Project
+          <ContextMenuItem @click.native="sendToCont(contextData)" >
+            {{shouldDisplaySquid(contextData)}}
           </ContextMenuItem>
         </template>
       </ContextMenu>
@@ -112,6 +108,21 @@ export default {
     },
     humanTime: function () {
       return moment(this.modified).fromNow()
+    },
+    shouldDisplaySquid: function (contextData) {
+      if(contextData != null) {
+        let list = contextData.split('.')
+        console.log(list)
+        if(list[list.length - 1] == 'squid') {
+          return "Open Squid Project"
+        }
+        else if(list[list.length - 1] == 'xml' || list[list.length - 1] == 'zip') {
+          return "New Squid Geochron Project"
+        }
+        else {
+          return "";
+        }
+      }
     },
     dragStart: function () {
       if (this.selectedCount === 0) {
