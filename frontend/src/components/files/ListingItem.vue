@@ -110,9 +110,8 @@ export default {
       return moment(this.modified).fromNow()
     },
     shouldDisplaySquid: function (contextData) {
-      if(contextData != null) {
+      if(contextData != null && !contextData.isEmpty()) {
         let list = contextData.split('.')
-        console.log(list)
         if(list[list.length - 1] == 'squid') {
           return "Open Squid Project"
         }
