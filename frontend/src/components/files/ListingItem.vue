@@ -110,7 +110,7 @@ export default {
       return moment(this.modified).fromNow()
     },
     shouldDisplaySquid: function (contextData) {
-      if(contextData != null || !contextData) {
+      if(contextData != null) {
         let list = contextData.split('.')
         if(list[list.length - 1] == 'squid') {
           return "Open Squid Project"
@@ -229,7 +229,6 @@ export default {
         this.removeSelected(this.index)
         return
       }
-
       if (event.shiftKey && this.selected.length > 0) {
         let fi = 0
         let la = 0
@@ -261,11 +260,21 @@ export default {
           this.open()
         }
         if(!this.isDir) {
-          const push = this.url.replace('/files', "")
-          top.postMessage(push, '*')
+          if(this.checkName()) {
+            const push = this.url.replace('/files', "")
+            top.postMessage(push, '*')
+          }
+          else {
+            this.open()
+          }
         }
       }
 
+    },
+    checkName: function () {
+      let arr = this.name.split("[.]")
+      let lastEle = arr[arr.length - 1]
+      return (lastEle == "squid")
     },
     touchstart () {
       setTimeout(() => {
