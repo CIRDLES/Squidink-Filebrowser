@@ -254,7 +254,6 @@ export default {
       this.addSelected(this.index)
     },
     dblclick: function () {
-      const catchClick = this.url.split("[.]");
       if (!this.singleClick) {
         if(this.isDir) {
           this.open()
@@ -272,7 +271,7 @@ export default {
 
     },
     checkName: function () {
-      let arr = this.name.split("[.]")
+      let arr = this.name.split(".")
       let lastEle = arr[arr.length - 1]
       return (lastEle == "squid")
     },
