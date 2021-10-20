@@ -273,7 +273,7 @@ export default {
     checkName: function () {
       let arr = this.name.split(".")
       let lastEle = arr[arr.length - 1]
-      return (lastEle == "squid")
+      return (lastEle == "squid" || lastEle == "xml" || lastEle == "zip")
     },
     touchstart () {
       setTimeout(() => {
