@@ -12,6 +12,7 @@
   @touchstart="touchstart"
   :data-dir="isDir"
   :aria-label="name"
+  :title="name"
   :aria-selected="isSelected">
     <div>
       <ContextMenu ref="menu">
