@@ -13,7 +13,7 @@
   :data-dir="isDir"
   :aria-label="name"
   :aria-selected="isSelected">
-    <div @contextmenu.prevent="$refs.menu.open($event, getPath(name))">
+    <div>
       <ContextMenu ref="menu">
         <template slot-scope="{ contextData }">
           <ContextMenuItem @click.native="sendToCont(contextData)" >
