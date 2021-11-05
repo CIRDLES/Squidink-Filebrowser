@@ -274,7 +274,7 @@ export default {
     checkName: function () {
       let arr = this.name.split(".")
       let lastEle = arr[arr.length - 1]
-      return (lastEle == "squid" || lastEle == "xml" || lastEle == "zip")
+      return (lastEle == "squid" || lastEle == "xml" || lastEle == "zip" || lastEle == "op")
     },
     touchstart () {
       setTimeout(() => {
