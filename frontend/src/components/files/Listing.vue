@@ -8,7 +8,7 @@
     <input style="display:none" type="file" id="upload-folder-input" @change="uploadInput($event)" webkitdirectory multiple>
   </div>
   <div v-else id="listing"
-    :class="user.viewMode">
+    class="list">
     <div>
       <div class="item header">
         <div></div>

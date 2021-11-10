@@ -41,6 +41,8 @@
           <download-button v-show="showDownloadButton"></download-button>
           <upload-button v-show="showUpload"></upload-button>
           <info-button v-show="isFiles"></info-button>
+          <delete-button v-show="showDeleteButton"></delete-button>
+          <move-button v-show="showMoveButton"></move-button>
 
           <button v-show="isListing || (isSharing && req.isDir)" @click="toggleMultipleSelection" :aria-label="$t('buttons.selectMultiple')" :title="$t('buttons.selectMultiple')" class="action" >
             <i class="material-icons">check_circle</i>

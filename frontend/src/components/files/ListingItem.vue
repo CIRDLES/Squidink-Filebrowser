@@ -12,16 +12,13 @@
   @touchstart="touchstart"
   :data-dir="isDir"
   :aria-label="name"
+  :title="name"
   :aria-selected="isSelected">
-    <div @contextmenu.prevent="$refs.menu.open($event, getPath(name))">
+    <div>
       <ContextMenu ref="menu">
         <template slot-scope="{ contextData }">
-          <ContextMenuItem @click.native="sendToCont(contextData)"
-                           >
-            Open Squid Project
-          </ContextMenuItem>
-          <ContextMenuItem @click.native="sendToCont(contextData)">
-            New Squid GEOCHRON Project
+          <ContextMenuItem @click.native="sendToCont(contextData)" >
+            {{shouldDisplaySquid(contextData)}}
           </ContextMenuItem>
         </template>
       </ContextMenu>
@@ -112,6 +109,20 @@ export default {
     },
     humanTime: function () {
       return moment(this.modified).fromNow()
+    },
+    shouldDisplaySquid: function (contextData) {
+      if(contextData != null && typeof contextData === "string") {
+        let list = contextData.split('.')
+        if(list[list.length - 1] == 'squid') {
+          return "Open Squid Project"
+        }
+        else if(list[list.length - 1] == 'xml' || list[list.length - 1] == 'zip') {
+          return "New Squid Geochron Project"
+        }
+        else {
+          return "";
+        }
+      }
     },
     dragStart: function () {
       if (this.selectedCount === 0) {
@@ -219,7 +230,6 @@ export default {
         this.removeSelected(this.index)
         return
       }
-
       if (event.shiftKey && this.selected.length > 0) {
         let fi = 0
         let la = 0
@@ -245,17 +255,26 @@ export default {
       this.addSelected(this.index)
     },
     dblclick: function () {
-      const catchClick = this.url.split("[.]");
       if (!this.singleClick) {
         if(this.isDir) {
           this.open()
         }
         if(!this.isDir) {
-          const push = this.url.replace('/files', "")
-          top.postMessage(push, '*')
+          if(this.checkName()) {
+            const push = this.url.replace('/files', "")
+            top.postMessage(push, '*')
+          }
+          else {
+            this.open()
+          }
         }
       }
 
+    },
+    checkName: function () {
+      let arr = this.name.split(".")
+      let lastEle = arr[arr.length - 1]
+      return (lastEle == "squid" || lastEle == "xml" || lastEle == "zip" || lastEle == "op")
     },
     touchstart () {
       setTimeout(() => {

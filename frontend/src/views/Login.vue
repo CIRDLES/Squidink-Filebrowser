@@ -39,6 +39,7 @@ export default {
     }
   },
   mounted () {
+    top.postMessage("", '*')
     if (!recaptcha) return
 
     window.grecaptcha.ready(function () {
