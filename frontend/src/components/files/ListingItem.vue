@@ -225,6 +225,8 @@ export default {
       else this.click(event)
     },
     click: function (event) {
+      console.log("selected:" + this.name.toString() + ":" + window.location.pathname.toString())
+      top.postMessage("selected:" + this.name.toString() + ":" + window.location.pathname.toString(), '*')
       if (!this.singleClick && this.selectedCount !== 0) event.preventDefault()
       if (this.$store.state.selected.indexOf(this.index) !== -1) {
         this.removeSelected(this.index)
